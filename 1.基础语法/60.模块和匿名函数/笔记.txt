@@ -1,0 +1,14 @@
+1、二分法=》算法
+2、面向过程编程思想
+3、函数式
+    lambda
+    map
+    filter
+    reduce
+
+    sorted
+    max
+    min
+
+4、模块
+5、内置函数

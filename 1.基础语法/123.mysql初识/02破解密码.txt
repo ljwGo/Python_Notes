@@ -1,0 +1,17 @@
+mysqladmin -uroot -p password "123"
+
+# 重置密码
+net stop MySQL
+mysqld --skip-grant-tables
+mysql
+    update mysql.user set password=password("") where user='root' and host = 'localhost';
+    flush privileges;
+
+net start MySQL
+
+tasklist |findstr mysql
+taskkill /F /PID 进程号
+
+\s 查看数据库信息
+
+my.ini mysql数据库的配置文件

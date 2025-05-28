@@ -1,0 +1,5 @@
+select * from emp order by age asc;  # 默认asc升序
+select * from emp order by age desc;  # 默认desc降序
+
+select * from emp order by age asc,salary desc; # 先按照age排列，如果age相同，再根据salary降序排列
+select * from emp order by age asc order by salary desc; # 先按照age排列，如果age相同，再根据salary降序排列

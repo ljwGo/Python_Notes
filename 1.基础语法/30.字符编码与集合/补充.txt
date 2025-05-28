@@ -1,0 +1,4 @@
+针对linux系统的py文件头格式
+#!/usr/bin/env python3.8 只针对已经在将python程序添加到环境变量的时候，且只对linux系统生效
+# coding:utf-8
+只在主文件中加

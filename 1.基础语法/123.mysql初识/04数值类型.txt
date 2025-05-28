@@ -1,0 +1,19 @@
+# 1、整形（默认是有符号的）
+create table t1(n, tinyint);
+
+insert into t1 values(-1);
+insert into t1 values(178);
+insert into t1 values(-178);
+
+create table t2(n tinyint unsigned);
+insert into t2 values(266);
+insert into t2 values(265);
+
+# 整形的宽度代表不是存储的字节宽度，而是显示的宽度（不设置最好）
+create table t3(n int(1) unsigned;
+insert into t3 values(10000);
+
+# 2、浮点型
+create table t14(x float(255,30));
+create table t15(x double(255,30);
+create table t16(x decimal(65,30));

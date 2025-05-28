@@ -1,0 +1,134 @@
+create table 库名.表明(
+    字段名1 类型[(宽度)约束条件],
+    字段名2 类型[(宽度)约束条件],
+    字段名3 类型[(宽度)约束条件],
+)
+约束条件：是在数据类型之外对字段附加的额外的限制
+
+注意：
+1、最后一个字段不能加逗号
+2、在同一张表中，字段名是不能相同的
+3、宽度和约束条件可选，字段名和类型是必须的
+
+二 not null 与 default
+create table t1(
+    id int primary key auto_increment,
+    name varchar(10) not null,
+    sex enum('male','female') not null default 'male'
+)
+
+三、unique key
+create table t1(x int unique);
+create table t3(
+    x int,
+    y char(4),
+    unique key(x)
+)
+
+create table t3(
+    x int,
+    y char(4),
+    constraint uni_x unique key(x)  # 为字段x的unique键设置名称
+)
+
+# 联合唯一
+create table service(
+    ip varchar(15),
+    port int,
+    unique key(ip,port)
+)
+
+四、primary key
+站在约束角度看primary key = not null unique
+但凡创建表，必须注意：
+1、必须有且只有一个主键
+2、通常是id字段被设置为主键
+3、当创建表示没有指定主键，mysql会依次查找表的字段，将其中约束条件为非空和唯一的键设置为主键
+如果不存在这样的字段，mysql则会设置一个隐藏的主键；如果有多个这样的字段，那只有一个会被设置为主键
+4、必须创建主键的要求是在使用innodb存储引擎时才有的要求
+
+# 设置联合主键
+create table t4(x int,y int,primary key(x,y))
+
+五、foreign key
+# foreign key注意
+# 1、被关联的字段必须是一个key，通常是id字段
+# 2、必须先创建被关联的表，才能建立关联表
+# 3、插入记录时，必须先在被关联表中插入记录，才能在关联表中插入记录
+# 因为关联字段中的值必须为被关联字段中的记录中有的值
+# 4、删除记录或者表时，必须先删除关联表中的记录或者表，才能接下来删出被关联表中数据
+
+'''
+结论：
+    由于使用foreign key关联不同的表，虽然可以解决表数据的重复累赘和修改问题
+    但是foreign key也会导致一个严重问题，那就当有很多表关联到一个表，那么如果想
+    要修改这个表，将会牵一发而动全身，可能导致数据安全问题；而且以后项目的拓展性
+    也会变差，因此实际生产中并不会真正使用foreign key。而是认为的通过添加一个其它id字段
+    来做关联
+'''
+
+create table emp(
+    id int primary key auto_increment,
+    name varchar(15),
+    age int,
+    dep_id int,
+    foreign key(dep_id) reference dep(id)
+)
+
+create table dep(
+    id int primary key auto_increment,
+    name varchar(15),
+    info varchar(20)
+)
+
+insert into dep(name,info) values
+('IT','技术能力有限公司'),
+('SALE','文化程度不高'),
+('HR','找不到人部门');
+
+insert into emp(name,age,dep_id) values('egon',18,1)
+
+create table emp(
+    id int primary key auto_increment,
+    name varchar(15),
+    age int,
+    dep_id int,
+    foreign key(dep_id) reference dep(id)
+    on update cascade  # 关联修改
+    on delete cascade  # 关联删除
+)
+
+# 照两张表之间关系的窍门
+emp         dep
+# 1、先站在左边的角度去找左表emp的多条记录能否对应右表dep的一条记录
+    翻译：多个员工能否属于一个部门
+
+# 2、然后站在右表的角度去找右表dep的多条记录能否对应左表emp的一条记录
+    翻译：多个部门能否能拥有同一名员工
+
+# 针对多对一的结果：
+# 1、如果只有单向的多对一成立，那么最终的关系就是多对一
+# 2、在emp表新增一个字段dep_id，该字段外键关联dep(id)
+
+# 针对多对多的结果：
+# 1、双向的多对一就是多对多
+# 2、需要建立第三张表，有一个字段值fk坐标，一个字段值的值fk右表
+create table book(
+    id int primary key auto_increment,
+    name varchar(10),
+    price int unsigned
+);
+
+create table author(
+    id int primary key auto_increment,
+    name varchar(12),
+    age int
+);
+
+create table&author(
+    id int primary key auto_increment,
+    author_id int,
+    book_id int
+);
+
+# 一对一：无需

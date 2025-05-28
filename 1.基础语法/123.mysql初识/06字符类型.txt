@@ -1,0 +1,16 @@
+char:定长
+varchar:变长
+
+# 宽度代表的是字符的个数
+create table t15(name char(5));
+create table t16(name varchar(5);
+
+insert into t15 values('你好 '); #'你好   '
+insert into t16 values('你好 '); #'你好 '
+
+select char_length() from t15;
+select char_length() from t16;
+
+set sql_mode = 'PAD_CHAR_TO_FULL_LENGTH'; # 设置mysql取出数据时不自动去除空格
+
+

@@ -1,0 +1,8 @@
+# 薪资最高那个人的详细信息
+select * from emp order by salary desc limit 1;
+
+select max(salary) from emp group by salary;
+
+select * from emp limit 0,5;  # 代表的是从0开始取5条
+select * from emp limit 6,10;  # 代表的是从5开始往后取10条
+

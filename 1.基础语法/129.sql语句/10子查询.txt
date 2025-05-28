@@ -1,0 +1,6 @@
+# 子查询：就是将一个查询语句的结果用括号括起来当作另外一个查询语句的条件去用
+
+select * from emp where dep_id = (select id from dep where name = "技术");
+select * from emp where dep_id in (select id from dep where name = "技术" or name = "人力资源");
+
+select * from (select id from dep where name = "技术") as t1;

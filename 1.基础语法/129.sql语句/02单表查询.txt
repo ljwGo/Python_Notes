@@ -1,0 +1,42 @@
+# 1、完整语法（语法级别关键字的排列顺序如下）
+select distinct 字段1，字段2，字段3，... from 库名.表名
+                    where 约束条件
+                    group by 分组条件
+                    having 过滤条件
+                    order by 排序的字段
+                    limit 限制显示的条数
+                    ;
+distinct 用于去重
+
+# 必须要有的关键字如下：
+select * from t1;
+
+# 关键字的执行效率
+from
+where
+group by
+having
+distinct
+order by
+limit
+
+
+select id,name from t1;
+select id,salary*12 as year_salary from t1;
+select concat('名字:',name) as new_name,concat(age,'哈哈') as new_age from t1;
+select concat_ws(":",name,age,sex);
+
+mysql的命令语句其实也是一种编程语言
+SELECT
+    (
+    CASE
+    WHEN name = "egon" THEN
+        name
+    WHEN name = "alex" THEN
+        CONCAT(NAME,"_DSB")
+    ELSE
+        concat(name,"sb")
+    END
+    ) as new_name
+FROM
+    EMP;

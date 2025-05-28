@@ -1,0 +1,30 @@
+1、
+mysql下mysql数据库下有用户表
+user（全局）-> db（某个数据库拥有权限） -> table_priv（某个表拥有权限） -> columns_priv（某个字段拥有权限）
+
+create user 用户名@"ip地址" by identified by "密码";
+create user haha@"192.168.15.90" by identified by "123";
+create user enen@"localhost" by identified by "222";  # 只允许mysql服务端所在的本地ip才能登陆
+create user sisi@"%" by identified by "333";  # 允许sisi在任意ip地址下登录
+create user cici@"199.22.01.%"  # 允许网段为199.22.01的ip网段登录
+
+
+2、创建账号并且授权（只有root账号才有为其它账号授权的权限grant）
+
+# *.* 对应的是user表
+grant all on *.* to "用户名"@"ip地址" identified by "123";  # 授予指定ip登录的用户获取所有数据库下对应表的权限
+
+# db1.* 对应的是db表
+grant all on db1.* to "en"@"%" identified by "111";
+
+# db1.t1 对应的是tables_priv表
+grant all on db1.t1 to "haha"@"%" identified by "321";
+
+# db1.t1(id) 对应的是columns_priv表
+grant select(id),update(name) on db1.t1 to "sisi"@"%" identified by "555";
+
+修改完权限一定要
+flush privileges;
+
+
+drop user "en"@"user"

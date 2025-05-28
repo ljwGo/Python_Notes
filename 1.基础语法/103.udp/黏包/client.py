@@ -1,0 +1,10 @@
+import socket
+sk = socket.socket()
+sk.connect(('127.0.0.1',8500))
+res = sk.recv(1)
+num = int(res.decode('utf-8'))
+res1 = sk.reve(num)
+res2 = sk.reve(1024)
+print(res1.decode('utf-8'))
+print(res2.decode('utf-8'))
+sk.close()

@@ -1,0 +1,29 @@
+group by分组
+# 按照所有记录相同的部分进行归类，一定区分度低的字段
+# 为何要分组：当我们要以组为单位进行统计时就必须分组，分组为单位的目的时为了以组为单位进行统计的，再去考虑分组的条件
+
+# 注意：分组之后，只能查到分组的字段以及组内多条记录聚合的成果
+select * from employee group by post;
+
+# 设置分组结果为聚合模式
+set global sql_mode="strict_trans_tables,only_full_group_by";
+为了体现分组的功能，我们会使用聚合函数
+
+聚合函数：
+    max
+    min
+    avg
+    sum
+    count
+
+select post,count(id) from emp group by post;
+select sex,count(id) from emp group by sex;
+
+# 统计出每个部门年龄在30以上的员工的平均薪资
+select post,avg(salary) from emp where age > 30 group by post;
+
+select max(salary) from employee;  # 这是可以运行的
+select max(salary) from employee where id > 5;  # 这也可以运行
+
+# 如果想得到分组之后其它字段的信息，可以使用group_concat()方法
+select post group_concat(name,":",age) as info from employee group by post;
